@@ -208,13 +208,6 @@ class SonarQube(StepImplementer):
                         and self.get_value('password')):
                     username = self.get_value('username')
                     password = self.get_value('password')
-
-        #Optional: project-key
-        if (self.get_value('project-key')):
-            project_key = self.get_value('project-key')
-        #Default
-        else:
-            project_key = f'{application_name}:{service_name}'
             
         application_name = self.get_value('application-name')
         service_name = self.get_value('service-name')
@@ -222,6 +215,13 @@ class SonarQube(StepImplementer):
         version = self.get_value('version')
         properties_file = self.get_value('properties')
         java_truststore = self.get_value('java-truststore')
+        
+        # Optional: project-key
+        if (self.get_value('project-key')):
+            project_key = self.get_value('project-key')
+        # Default
+        else:
+            project_key = f'{application_name}:{service_name}'
 
         if not os.path.exists(properties_file):
             step_result.success = False
