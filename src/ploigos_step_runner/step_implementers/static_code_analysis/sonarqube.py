@@ -164,7 +164,7 @@ class SonarQube(StepImplementer):
         super()._validate_required_config_or_previous_step_result_artifact_keys()
 
         # if token ensure no username and password
-        if (self.get_value('token')):
+        if self.get_value('token'):
             if (self.get_value('username')
                     or self.get_value('password')):
                 raise StepRunnerException(
@@ -172,8 +172,6 @@ class SonarQube(StepImplementer):
                 )
         # if no token present, ensure either both git-username and git-password are set or neither
         else:
-            runtime_auth_config = {}
-
             if (self.get_value('username') and self.get_value('password') is None
                         or self.get_value('username') is None and self.get_value('password')):
                 raise StepRunnerException(
@@ -196,7 +194,7 @@ class SonarQube(StepImplementer):
         token = None
 
         if self.has_config_value(AUTHENTICATION_CONFIG, True):
-            if (self.get_value('token')):
+            if self.get_value('token'):
                 token = self.get_value('token')
             # Optional: username and password
             else:
@@ -213,7 +211,7 @@ class SonarQube(StepImplementer):
         java_truststore = self.get_value('java-truststore')
 
         # Optional: project-key
-        if (self.get_value('project-key')):
+        if self.get_value('project-key'):
             project_key = self.get_value('project-key')
         # Default
         else:
